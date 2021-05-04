@@ -1,0 +1,42 @@
+.PHONY: all test
+
+
+OBJS= heap.o
+RM= del
+MAKE= make
+MYLIBNAME= libHeap.a
+
+
+all: $(MYLIBNAME)
+
+uninstall:
+	$(RM) -f $(MYLIBNAME)
+
+
+#-Wno-pedantic-ms-format в попытках избежать конфликтов из-за size_t
+CFLAGS= -std=c11 -pedantic -Wall -Wextra
+
+# Включаемые файлы следует искать в каталоге "include"
+INCLUDES+= -I./include
+
+# Make должна искать файлы *.h в каталогах include и src
+vpath %.h include src
+# ..., а файлы *.c - в каталоге src
+vpath %.c src
+
+$(MYLIBNAME): $(OBJS)
+	$(AR) -rsc $@ $^
+	$(RM) -f $(OBJS)
+	$(RM) -f $(OBJS:.o=.d)
+
+# Построение объектных файлов
+%.o: %.c
+	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
+
+test:
+	$(MAKE) -C test
+
+cmd: $(MYLIBNAME)
+	$(MAKE) -C src
+
+-include $(OBJS:.o=.d)

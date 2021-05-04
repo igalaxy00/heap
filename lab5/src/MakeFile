@@ -1,0 +1,36 @@
+.PHONY: all clean
+
+
+OBJS= main.o
+
+
+NAME= heap.exe
+RM= del
+
+all: $(NAME)
+
+clean:
+	$(RM) -f $(OBJS)
+	$(RM) -f $(OBJS:.o=.d)
+
+
+CFLAGS= -std=c11 -pedantic -Wall -Wextra
+
+INCLUDES+= -I../include
+
+vpath %.h ../include
+
+vpath %.c ./
+
+
+$(NAME): $(OBJS)
+	gcc $(CFLAGS) -o $(NAME) $(INCLUDES) $(OBJS) -L.. -lHeap
+	$(RM) -f $(OBJS)
+	$(RM) -f $(OBJS:.o=.d)
+
+
+%.o: %.c
+	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
+
+
+-include $(OBJS:.o=.d)

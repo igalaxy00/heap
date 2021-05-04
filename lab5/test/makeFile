@@ -1,0 +1,35 @@
+.PHONY: all
+
+
+OBJS= test.o  \
+      CuTest.o \
+	  heap.o
+
+
+NAME= test.exe
+RM= del
+
+# Собираем test, выполняем и удаляем
+all: $(NAME)
+	$(NAME)
+	$(RM) -f $(OBJS)
+	$(RM) -f $(OBJS:.o=.d)
+	$(RM) -f $(NAME)
+
+CFLAGS= -std=c11 -pedantic -Wall -Wextra
+
+INCLUDES+= -I../include
+
+
+vpath %.h ../include
+
+vpath %.c ./ ../src
+
+$(NAME): $(OBJS)
+	gcc $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS)
+
+%.o: %.c
+	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
+
+
+-include $(OBJS:.o=.d)
