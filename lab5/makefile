@@ -9,6 +9,7 @@ MYLIBNAME= libHeap.a
 
 all: $(MYLIBNAME)
 
+#если надо удалить нашу либу
 uninstall:
 	$(RM) -f $(MYLIBNAME)
 
@@ -23,7 +24,7 @@ INCLUDES+= -I./include
 vpath %.h include src
 # ..., а файлы *.c - в каталоге src
 vpath %.c src
-
+#создание либы и удаление мусора
 $(MYLIBNAME): $(OBJS)
 	$(AR) -rsc $@ $^
 	$(RM) -f $(OBJS)
@@ -31,10 +32,10 @@ $(MYLIBNAME): $(OBJS)
 # Построение объектных файлов
 %.o: %.c
 	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<
-
+#запуск test
 test:
 	$(MAKE) -C test
-
+#запуск cmd
 cmd: $(MYLIBNAME)
 	$(MAKE) -C src
 
