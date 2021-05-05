@@ -1,4 +1,4 @@
-#include "heap.h"
+#include "../include/heap.h"
 #include "malloc.h"
 #include <stdbool.h>
 #include <stdio.h>

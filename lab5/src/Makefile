@@ -26,8 +26,6 @@ vpath %.c ./
 $(NAME): $(OBJS)
 	gcc $(CFLAGS) -o $(NAME) $(INCLUDES) $(OBJS) -L.. -lHeap
 	$(RM) -f $(OBJS)
-	$(RM) -f $(OBJS:.o=.d)
-
 
 %.o: %.c
 	gcc $(CFLAGS) $(INCLUDES) -c -o $@ $<

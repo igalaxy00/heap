@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
-#include "libHeap.h"
+#include "../include/libHeap.h"
 
 static void sort(char *input_file, char *output_file) {
     key_heap tmp = 0;
@@ -72,7 +72,6 @@ static void tree(char *input_file, char *output_file, bool type) {//четыре
     }
 
     fclose(fout);
-
 }
 
 static void extract(char *input_file, char *output_file, bool type) {
@@ -189,6 +188,7 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[2], "extract") == 0) {
         extract(input_file, output_file, type);
     }
+
 
 
     return 0;
